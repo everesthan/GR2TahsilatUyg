@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="100" resizable="true"
+                          closable="true" collapsible="true">
+
+                <ui:insert name="top"> 
+                    
+                    <table border="0" width="100%">
+                        <tr>
+                            <td width="20%">
+                                <p:graphicImage library="img"
+                                                name="ptt.png"
+                                                style="width: 50%"
+                                                rendered="false
+                                                "/>
+                            </td>
+                            <td width="80%">
+                                <center>
+                                    <font size="6"><b>TAHSILAT UYGULAMASI</b></font>
+                                </center>
+                            </td>
+                        </tr>
+                    </table>
+                   
+                    
+                    
+                </ui:insert>
+
+            </p:layoutUnit>
+            <p:layoutUnit position="south" size="100"
+                          resizable="true" closable="true" collapsible="true">
+                <ui:insert name="bottom">
+                    <h:outputText value="Copyright @ 2015" />
+                </ui:insert>
+
+            </p:layoutUnit>
+            <p:layoutUnit position="west" size="200"
+                          resizable="true" closable="true"
+                          collapsible="true">
+                <ui:insert name="left">
+                    <h:form>
+                        <p:menu model="#{menuBean.menuModel}"/>
+                        <p:themeSwitcher style="width: 165px" 
+                                         value="#{tercih.seciliTema}">
+                            <f:selectItem itemLabel="Tema Seçiniz..." itemValue=""/>
+                            <f:selectItems value="#{tercih.temaListesi}"/>
+                            <p:ajax listener="#{tercih.temaKaydet()}"/>
+                        </p:themeSwitcher>
+                   </h:form>  
+                    
+                </ui:insert>
+            </p:layoutUnit>
+          
+            <p:layoutUnit id="centerUnit" position="center">
+                <ui:insert name="content">
+                <h:outputText value="FullPage Layout using PrimeFaves
+                              Layout Component." />
+                 </ui:insert>
+            </p:layoutUnit>
+        </p:layout>
+
+
+
+      
+
+
+    </h:body>
+
+</html>
