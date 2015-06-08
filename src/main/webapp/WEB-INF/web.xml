@@ -23,6 +23,6 @@
     </welcome-file-list>
     <context-param>  
         <param-name>primefaces.THEME</param-name>  
-        <param-value>#{tercih.seciliTema } </param-value>  
+        <param-value>#{kisiBean.kisi.tema} </param-value>  
     </context-param>  
 </web-app>

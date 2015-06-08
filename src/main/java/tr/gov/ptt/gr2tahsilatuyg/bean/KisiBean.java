@@ -1,6 +1,8 @@
 package tr.gov.ptt.gr2tahsilatuyg.bean;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -18,11 +20,29 @@ public class KisiBean {
     @EJB
     private KisiService kisiService;
     
+    private List<String> temaListesi ;
+    
 
     public KisiBean() {
        kisi = new Kisi();   
+       kisi.setTema("bluesky");
+       temaListesi =new ArrayList<>();
+       
+       temaListesiDoldur();
     }
+ public void temaListesiDoldur()
+    {
+       temaListesi = new ArrayList<String>();
+       temaListesi.add("afterdark");
+       temaListesi.add("blitzer");
+       temaListesi.add("hot-sneaks");
+       temaListesi.add("humanity");
+       temaListesi.add("south-street");
+       temaListesi.add("sunny");
+       temaListesi.add("trontastic");
+       temaListesi.add("vader");
 
+    }
     public Kisi getKisi() {
         return kisi;
     }
@@ -30,7 +50,14 @@ public class KisiBean {
     public void setKisi(Kisi kisi) {
         this.kisi = kisi;
     }
-    
+
+    public List<String> getTemaListesi() {
+        return temaListesi;
+    }
+
+   
+   
+   
     
     public String girisKontrol(){
        Kisi vtKisi = kisiService.girisKontrol(kisi);
@@ -41,10 +68,7 @@ public class KisiBean {
             HttpSession session = JSFUtil.getSession();
             session.setAttribute("username", vtKisi.getKullaniciAd());
             System.out.println("Girişteki"+kisi.getTema());
-            
-          
-        
-          
+           
             return "menu.xhtml?faces-redirect=true";
         }
         else{
@@ -57,6 +81,9 @@ public class KisiBean {
         JSFUtil.sessionBitir();
          return "giris.xhtml?faces-redirect=true"  ;
     }         
-    
+   public void temaKaydet()
+   {
+       kisiService.kisiGuncelle(kisi);
+   }
     
 }
