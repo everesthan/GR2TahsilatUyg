@@ -3,21 +3,100 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./anaTemplate.xhtml">
 
             <ui:define name="content">
-                <h:form>
-                    <p:dataTable var="borc" 
-                                 value="#{borcBean.borcListesi}">
-                        <p:column headerText="ID">
-                            <h:outputText value="#{borc.faturaTutar}">
+                <h:form id="listeForm">
+                    <p:panelGrid columns="2">
+                        
+                        <p:outputLabel value="Kurum Adı:"/>
+                        <p:outputLabel value="#{borcBean.borc.kurum.ad}"/>
+                        
+                        <p:outputLabel value="Ad Soyad"/>
+                        <p:outputLabel value="#{borcBean.borc.aboneAd} #{borcBean.borc.aboneSoyad}"/>
+                        
+                         <p:outputLabel value="Abone No"/>
+                         <p:outputLabel value="#{borcBean.borc.aboneNo}"/>
+                        
+                      
+                    </p:panelGrid>
+                    <p:dataTable id="borcTable"
+                                 var="borc" 
+                                 value="#{borcBean.borcListesi}"
+                                 selection="#{borcBean.seciliBorclar}"
+                                 rowKey="#{borc.id}"
+                                 >
+                        <f:facet name="header">
+                            ÖDENECEK FATURALARI SEÇİNİZ..
+                        </f:facet>
+                        
+                        <p:ajax event="rowSelectCheckbox"
+                                listener="#{borcBean.hesapla()}"
+                                update="@form"/>
+                        
+                        <p:ajax event="rowUnselectCheckbox"
+                                listener="#{borcBean.hesapla()}"
+                                update="@form"/>
+                        
+                        <p:ajax event="toggleSelect"
+                                listener="#{borcBean.hesapla()}"
+                                update="@form"/>
+                        
+                       
+                        
+                        <p:column selectionMode="multiple"
+                                  style="width: 16px;text-align: center"/>
+                        
+                        <p:column headerText="Fatura No">
+                            <h:outputText value="#{borc.faturaNo}"/>
                         </p:column>
+                        <p:column headerText="son Odeme Tarihi">
+                            <h:outputText value="#{borc.faturaSonOdemeTrh}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                         <p:column headerText="Tutar">
+                            <h:outputText value="#{borc.faturaTutar}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton value="HESAPLA"
+                                             action="#{borcBean.hesapla()}"
+                                             update="@form"
+                                             />
+  
+                        </f:facet>   
                     
                     </p:dataTable>
+                    
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="TOPLAM: "/>
+                        <p:inputText value="#{borcBean.toplam}" readonly="true">
+                            <f:convertNumber maxFractionDigits="2"/>
+                        </p:inputText>
+                        
+                        
+                        <p:outputLabel value="ALINAN: "/>
+                        <p:inputText value="#{borcBean.alinan}">
+                            <p:ajax event="keyup" 
+                                    update="paraUstu"
+                                    listener="#{borcBean.paraUstu}"/>
+                         
+                        </p:inputText>
+                            
+                        
+                        <p:outputLabel value="PARA USTU: "/>
+                        <p:inputText id="paraUstu"
+                                     value="#{borcBean.paraUstu}">
+                         <f:convertNumber maxFractionDigits="2"/>
+                        </p:inputText>
+                        
+                    </p:panelGrid>
                     
                 </h:form>
             </ui:define>
