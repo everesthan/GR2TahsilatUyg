@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -14,16 +15,43 @@
                     <p:panel header="Tahsilat Giriş">
                         <p:panelGrid columns="3">
                             <p:column>
-                                <p:outputLabel value = "Kurum Adı"/>
+                                <p:outputLabel value = "Kurum Adı:"/>
                                 
                             </p:column>
                             <p:column>
                                 <p:autoComplete id="kurumAd" 
-                                                itemLabel="#{borcBean.borc.kurum.ad}"
-                                                itemValue="#{borcBean.borc.kurum.id}"
-                                                completeMethod="#{borcBean.borc.kurum.ad}"/>
+                                                value="#{borcBean.borc.kurum.ad}"
+                                                completeMethod="#{borcBean.tamamlaKurumAdi}"/>
+                            </p:column>
+                            <p:column>
+                                <p:message for="kurumAd" id="kurumAdMsd"/>
                             </p:column>
                             
+                             <p:column>
+                                <p:outputLabel value = "Abone No:"/>   
+                            </p:column>
+                            
+                            <p:column>
+                                <p:inputText id="aboneNo"
+                                             value="#{borcBean.borc.aboneNo}"
+                                             required="true">
+                                    <p:ajax event="keyup" update="aboneNoMsg"/>
+                                    <f:validateLength minimum="3" maximum="11"/>
+                                </p:inputText>
+                            </p:column>   
+                            
+                            <p:column>
+                                <p:message for="aboneNo" id="aboneNoMsg"/>
+                            </p:column>
+                            
+                            
+                            <p:column><p:outputLabel value=""/></p:column>
+                            <p:column>
+                                <p:commandButton value="Fatura Sorgula"
+                                    action="#{borcBean.borclistele()}"
+                                    update="tahsilatGirisForm"/>
+                            </p:column>
+                            <p:column><p:outputLabel value=""/></p:column>
                         </p:panelGrid>
                         
                     </p:panel>

@@ -26,6 +26,8 @@ public class KisiBean {
     public KisiBean() {
        kisi = new Kisi();   
        kisi.setTema("bluesky");
+       kisi.setKullaniciAd("ryn");
+       kisi.setSifre("1111");
        temaListesi =new ArrayList<>();
        
        temaListesiDoldur();

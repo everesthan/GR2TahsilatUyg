@@ -35,7 +35,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Borc.findAll", query = "SELECT b FROM Borc b"),
     @NamedQuery(name = "Borc.findById", query = "SELECT b FROM Borc b WHERE b.id = :id"),
-    @NamedQuery(name = "Borc.findByKurumAbone", 
+    @NamedQuery(name = "Borc.findByKurumIdAboneNo", 
             query = "SELECT b FROM Borc b WHERE b.aboneNo = :aboneNo "+
                     " and b.kurum.id =:kurumId and b.faturaDurum =0"),
     @NamedQuery(name = "Borc.findByAboneNo", query = "SELECT b FROM Borc b WHERE b.aboneNo = :aboneNo"),
@@ -84,6 +84,7 @@ public class Borc implements Serializable {
     private Kurum kurum;
 
     public Borc() {
+        kurum = new Kurum();
     }
 
     public Borc(BigDecimal id) {
